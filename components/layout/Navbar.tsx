@@ -12,19 +12,11 @@ const navLinks = [
   { label: "Kontakt", href: "#kontakt" },
 ];
 
-function Logo({
-  light,
-  onNavigate,
-}: {
-  light: boolean;
-  onNavigate?: () => void;
-}) {
+function Logo({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <Link
       href="#"
-      className={`group flex items-center gap-2.5 transition-opacity hover:opacity-80 ${
-        light ? "text-white" : "text-wine"
-      }`}
+      className="group flex items-center gap-2.5 text-wine transition-opacity hover:opacity-80"
       onClick={(e) => {
         e.preventDefault();
         onNavigate?.();
@@ -36,11 +28,7 @@ function Logo({
         <span className="font-display text-2xl font-bold tracking-tight">
           Ketering
         </span>
-        <span
-          className={`block text-xs font-semibold tracking-wide ${
-            light ? "text-white/80" : "text-charcoal/70"
-          }`}
-        >
+        <span className="block text-xs font-semibold tracking-wide text-charcoal/70">
           jedne mame
         </span>
       </div>
@@ -49,34 +37,7 @@ function Logo({
 }
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [overHero, setOverHero] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setOverHero(entry.isIntersecting);
-      },
-      { threshold: 0, rootMargin: "-72px 0px 0px 0px" }
-    );
-
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -91,28 +52,18 @@ export default function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
 
-  const light = overHero && !isScrolled;
-
   return (
     <>
-      <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          light
-            ? "bg-gradient-to-b from-charcoal/75 via-charcoal/40 to-transparent"
-            : "bg-white/95 shadow-md backdrop-blur-md"
-        }`}
-      >
+      <header className="sticky top-0 z-50 bg-white/95 shadow-md backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-20 md:px-6">
-          <Logo light={light} />
+          <Logo />
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Glavna navigacija">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-semibold transition-colors hover:text-wine ${
-                  light ? "text-white/90 hover:text-white" : "text-charcoal/80"
-                }`}
+                className="text-sm font-semibold text-charcoal/80 transition-colors hover:text-wine"
               >
                 {link.label}
               </Link>
@@ -122,22 +73,14 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="#kontakt"
-              className={`hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-colors md:inline-flex ${
-                isScrolled
-                  ? "bg-wine text-white hover:bg-wine/90"
-                  : "bg-wine text-white hover:bg-wine/90"
-              }`}
+              className="hidden rounded-full bg-wine px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-wine/90 md:inline-flex"
             >
               Naruči odmah
             </Link>
 
             <button
               type="button"
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors md:hidden ${
-                light
-                  ? "text-white hover:bg-white/10"
-                  : "text-charcoal hover:bg-charcoal/5"
-              }`}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-charcoal transition-colors hover:bg-charcoal/5 md:hidden"
               onClick={() => setIsOpen(true)}
               aria-label="Otvori meni"
               aria-expanded={isOpen}
@@ -177,7 +120,7 @@ export default function Navbar() {
         aria-label="Mobilna navigacija"
       >
         <div className="flex items-center justify-between border-b border-charcoal/10 px-5 py-4">
-          <Logo light={false} onNavigate={closeMenu} />
+          <Logo onNavigate={closeMenu} />
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-charcoal hover:bg-charcoal/5"
