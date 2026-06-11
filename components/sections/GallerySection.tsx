@@ -2,19 +2,56 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { galleryImages, INSTAGRAM_URL } from "@/data/gallery";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function GallerySection() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const closeLightbox = useCallback(() => {
     setLightboxIndex(null);
   }, []);
 
+  const goToPrevious = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev === null
+        ? null
+        : (prev - 1 + galleryImages.length) % galleryImages.length
+    );
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev === null ? null : (prev + 1) % galleryImages.length
+    );
+  }, []);
+
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    if (touchStartX.current === null || lightboxIndex === null) return;
+
+    const touchEndX = event.changedTouches[0]?.clientX;
+    if (touchEndX === undefined) return;
+
+    const delta = touchEndX - touchStartX.current;
+    const swipeThreshold = 48;
+
+    if (delta > swipeThreshold) {
+      goToPrevious();
+    } else if (delta < -swipeThreshold) {
+      goToNext();
+    }
+
+    touchStartX.current = null;
   };
 
   useEffect(() => {
@@ -22,18 +59,8 @@ export default function GallerySection() {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") {
-        setLightboxIndex((prev) =>
-          prev === null ? null : (prev + 1) % galleryImages.length
-        );
-      }
-      if (e.key === "ArrowLeft") {
-        setLightboxIndex((prev) =>
-          prev === null
-            ? null
-            : (prev - 1 + galleryImages.length) % galleryImages.length
-        );
-      }
+      if (e.key === "ArrowRight") goToNext();
+      if (e.key === "ArrowLeft") goToPrevious();
     };
 
     document.body.style.overflow = "hidden";
@@ -43,7 +70,7 @@ export default function GallerySection() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [lightboxIndex, closeLightbox]);
+  }, [lightboxIndex, closeLightbox, goToNext, goToPrevious]);
 
   const activeImage =
     lightboxIndex !== null ? galleryImages[lightboxIndex] : null;
@@ -136,14 +163,16 @@ export default function GallerySection() {
             </svg>
           </button>
 
+          <p className="absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
+            {lightboxIndex + 1} / {galleryImages.length}
+          </p>
+
           <button
             type="button"
-            className="absolute left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 md:flex"
+            className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25 sm:left-4"
             onClick={(e) => {
               e.stopPropagation();
-              setLightboxIndex(
-                (lightboxIndex! - 1 + galleryImages.length) % galleryImages.length
-              );
+              goToPrevious();
             }}
             aria-label="Prethodna slika"
           >
@@ -154,10 +183,10 @@ export default function GallerySection() {
 
           <button
             type="button"
-            className="absolute right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 md:flex"
+            className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25 sm:right-4"
             onClick={(e) => {
               e.stopPropagation();
-              setLightboxIndex((lightboxIndex! + 1) % galleryImages.length);
+              goToNext();
             }}
             aria-label="Sledeća slika"
           >
@@ -167,14 +196,17 @@ export default function GallerySection() {
           </button>
 
           <div
-            className="relative h-[70vh] w-full max-w-4xl"
+            className="relative h-[70vh] w-full max-w-4xl touch-pan-y"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <Image
+              key={activeImage.id}
               src={activeImage.src}
               alt={activeImage.alt}
               fill
-              className="object-contain"
+              className="pointer-events-none object-contain"
               sizes="100vw"
               priority
             />
