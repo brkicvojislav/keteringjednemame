@@ -3,55 +3,109 @@ import { CONTACT } from "@/lib/contact";
 export interface GalleryImage {
   id: string;
   src: string;
+  thumbSrc: string;
   alt: string;
+  featured: boolean;
 }
 
-export const galleryImages: GalleryImage[] = [
+const galleryManifest: Omit<GalleryImage, "src" | "thumbSrc">[] = [
   {
-    id: "g1",
-    src: "/images/hero.webp",
-    alt: "Sveže pečene kiflice na plehu",
+    id: "g01",
+    alt: "Raznovrsno domaće pecivo na drvenoj dasci za ketering",
+    featured: true,
   },
   {
-    id: "g2",
-    src: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80&auto=format&fit=crop",
-    alt: "Rolati sa pršutom na tanjiru",
+    id: "g02",
+    alt: "Zalogaji u obliku cigare sa dip sosom na drvenoj dasci",
+    featured: true,
   },
   {
-    id: "g3",
-    src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80&auto=format&fit=crop",
-    alt: "Mini pice sa sirom i bosiljkom",
+    id: "g03",
+    alt: "Mini pice pripremljene za pečenje",
+    featured: true,
   },
   {
-    id: "g4",
-    src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80&auto=format&fit=crop",
-    alt: "Voćna torta za proslavu",
+    id: "g04",
+    alt: "Kiflice sa makom, susamom i sirom u kutiji za dostavu",
+    featured: true,
   },
   {
-    id: "g5",
-    src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop",
-    alt: "Elegantno servirani sto za događaj",
+    id: "g05",
+    alt: "Slani rolati sa spanaćem i paprikom na tanjiru",
+    featured: true,
   },
   {
-    id: "g6",
-    src: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80&auto=format&fit=crop",
-    alt: "Raznovrsni zalogaji na bufetu",
+    id: "g06",
+    alt: "Slatka ponuda sa kroasanima i krem pufnicama",
+    featured: true,
   },
   {
-    id: "g7",
-    src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80&auto=format&fit=crop",
-    alt: "Proslava sa gostima za stolom",
+    id: "g07",
+    alt: "Lisnati štapići sa susamom i slanim prelivom",
+    featured: true,
   },
   {
-    id: "g8",
-    src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80&auto=format&fit=crop",
-    alt: "Domaća hrana pripremljena za goste",
+    id: "g08",
+    alt: "Pita spiral u tepsiji, pečena do zlatne boje",
+    featured: true,
   },
   {
-    id: "g9",
-    src: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80&auto=format&fit=crop",
-    alt: "Pečena peciva i kolači na stolu",
+    id: "g09",
+    alt: "Slani rolati spremni za serviranje u kutijama",
+    featured: false,
+  },
+  {
+    id: "g10",
+    alt: "Kiflice, pite i peciva u kutijama za ketering",
+    featured: true,
+  },
+  {
+    id: "g11",
+    alt: "Bavarske kiflice sa šunkom i salatom",
+    featured: false,
+  },
+  {
+    id: "g12",
+    alt: "Miks bavarskih, slanih i posnih sendvičića",
+    featured: false,
+  },
+  {
+    id: "g13",
+    alt: "Mini sendvičići sa maslinama za proslavu",
+    featured: false,
+  },
+  {
+    id: "g14",
+    alt: "Ukrasno slatko pecivo u kutiji",
+    featured: false,
+  },
+  {
+    id: "g15",
+    alt: "Kiflica sa sirom i viršlom, presek",
+    featured: false,
+  },
+  {
+    id: "g16",
+    alt: "Kiflica sa domaćim džemom, presek",
+    featured: false,
+  },
+  {
+    id: "g17",
+    alt: "Sveže pečena lepinja na roštilju",
+    featured: false,
   },
 ];
+
+function toGalleryImage(item: (typeof galleryManifest)[number]): GalleryImage {
+  return {
+    ...item,
+    src: `/images/gallery/${item.id}.webp`,
+    thumbSrc: `/images/gallery/${item.id}-thumb.webp`,
+  };
+}
+
+export const galleryImages: GalleryImage[] = galleryManifest.map(toGalleryImage);
+
+export const featuredGalleryImages = galleryImages.filter((image) => image.featured);
 
 export const INSTAGRAM_URL = CONTACT.instagram;

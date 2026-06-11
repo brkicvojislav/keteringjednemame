@@ -10,22 +10,17 @@ export default function HeroSection() {
     <section id="hero" className="relative min-h-screen">
       <Image
         src={HERO_IMAGE}
-        alt="Sveže pečene kiflice i domaća hrana pripremljena za ketering"
+        alt="Raznovrsno domaće pecivo i ketering zalogaji na drvenoj dasci"
         fill
         priority
-        className="object-cover"
+        quality={95}
+        className="object-cover object-bottom"
         sizes="100vw"
       />
 
-      {/* Blur on the text side — keeps food sharp on the right */}
+      {/* Tamniji overlay levo (tekst), svetliji ka desno, poslednjih 20% bez prekrivanja */}
       <div
-        className="absolute inset-0 backdrop-blur-md [-webkit-mask-image:linear-gradient(to_right,black_50%,transparent_85%)] [mask-image:linear-gradient(to_right,black_50%,transparent_85%)]"
-        aria-hidden="true"
-      />
-
-      {/* Darker gradient for title and button contrast */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/68 to-charcoal/30"
+        className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(26,22,20,0.42)_0%,rgba(26,22,20,0.12)_32%,transparent_52%),linear-gradient(to_right,rgba(26,22,20,0.94)_0%,rgba(26,22,20,0.78)_34%,rgba(26,22,20,0.42)_56%,rgba(26,22,20,0.12)_72%,transparent_80%)] md:bg-[linear-gradient(to_right,rgba(26,22,20,0.9)_0%,rgba(26,22,20,0.68)_30%,rgba(26,22,20,0.34)_52%,rgba(26,22,20,0.1)_68%,transparent_80%)]"
         aria-hidden="true"
       />
 

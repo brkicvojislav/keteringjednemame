@@ -3,7 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { galleryImages, INSTAGRAM_URL } from "@/data/gallery";
+import {
+  featuredGalleryImages,
+  galleryImages,
+  INSTAGRAM_URL,
+} from "@/data/gallery";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function GallerySection() {
@@ -28,8 +32,11 @@ export default function GallerySection() {
     );
   }, []);
 
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
+  const openLightbox = (imageId: string) => {
+    const index = galleryImages.findIndex((image) => image.id === imageId);
+    if (index >= 0) {
+      setLightboxIndex(index);
+    }
   };
 
   const handleTouchStart = (event: React.TouchEvent) => {
@@ -85,9 +92,10 @@ export default function GallerySection() {
         />
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-          {galleryImages.map((image, index) => {
+          {featuredGalleryImages.map((image, index) => {
             const isLastAloneOnMobile =
-              index === galleryImages.length - 1 && galleryImages.length % 2 !== 0;
+              index === featuredGalleryImages.length - 1 &&
+              featuredGalleryImages.length % 2 !== 0;
 
             return (
             <button
@@ -96,11 +104,11 @@ export default function GallerySection() {
               className={`group relative aspect-square overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-wine focus-visible:ring-offset-2 ${
                 isLastAloneOnMobile ? "col-span-2 md:col-span-1" : ""
               }`}
-              onClick={() => openLightbox(index)}
+              onClick={() => openLightbox(image.id)}
               aria-label={`Uvećaj sliku: ${image.alt}`}
             >
               <Image
-                src={image.src}
+                src={image.thumbSrc}
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -127,6 +135,13 @@ export default function GallerySection() {
             );
           })}
         </div>
+
+        {galleryImages.length > featuredGalleryImages.length && (
+          <p className="mt-6 text-center text-sm text-charcoal/55">
+            Klikni na sliku i listaj dalje za još{" "}
+            {galleryImages.length - featuredGalleryImages.length} fotografija.
+          </p>
+        )}
 
         <p className="mt-10 text-center">
           <Link

@@ -67,8 +67,12 @@ export default function RootLayout({
     <html
       lang="sr"
       className={`${caveat.variable} ${nunito.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col font-body">
+      <body
+        className="flex min-h-full flex-col font-body"
+        suppressHydrationWarning
+      >
         <a href="#main-content" className="skip-link">
           Preskoči na sadržaj
         </a>
