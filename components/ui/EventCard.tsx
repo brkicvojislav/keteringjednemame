@@ -111,16 +111,16 @@ export default function EventCard({ event }: EventCardProps) {
         aria-hidden="true"
       />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 px-3 py-4 text-center text-white transition-all duration-300 sm:gap-3 sm:px-4 sm:py-5 group-data-[expanded=true]/event:justify-start group-data-[expanded=true]/event:gap-2 group-data-[expanded=true]/event:pt-5 group-data-[expanded=true]/event:pb-4 md:group-hover/event:justify-start md:group-hover/event:gap-2.5 md:group-hover/event:pt-6 md:group-hover/event:pb-5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-gold ring-1 ring-white/10">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 px-3 py-4 text-center text-white transition-all duration-300 sm:gap-3 sm:px-4 sm:py-5 max-md:group-data-[expanded=true]/event:justify-center max-md:group-data-[expanded=true]/event:gap-0 md:group-hover/event:justify-start md:group-hover/event:gap-2.5 md:group-hover/event:pt-6 md:group-hover/event:pb-5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-gold ring-1 ring-white/10 max-md:group-data-[expanded=true]/event:hidden">
           <EventIcon icon={event.icon} />
         </div>
 
-        <h3 className="shrink-0 font-display text-base leading-tight text-balance sm:text-xl md:text-2xl">
+        <h3 className="shrink-0 font-display text-base leading-tight text-balance sm:text-xl max-md:group-data-[expanded=true]/event:hidden md:text-2xl">
           {event.name}
         </h3>
 
-        <p className="max-h-0 overflow-hidden text-xs leading-snug text-white/90 opacity-0 transition-all duration-300 sm:text-sm group-data-[expanded=true]/event:max-h-32 group-data-[expanded=true]/event:opacity-100 md:group-hover/event:max-h-36 md:group-hover/event:opacity-100">
+        <p className="hidden text-xs leading-snug text-white/90 max-md:group-data-[expanded=true]/event:flex max-md:group-data-[expanded=true]/event:flex-1 max-md:group-data-[expanded=true]/event:items-center max-md:group-data-[expanded=true]/event:justify-center max-md:group-data-[expanded=true]/event:px-2 sm:text-sm md:block md:max-h-0 md:overflow-hidden md:opacity-0 md:transition-all md:duration-300 md:group-hover/event:max-h-36 md:group-hover/event:opacity-100">
           {event.description}
         </p>
       </div>
