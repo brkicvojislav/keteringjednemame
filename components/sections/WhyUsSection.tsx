@@ -64,7 +64,7 @@ const features = [
   {
     title: "Sveže na dan dostave",
     description:
-      "Ništa se ne priprema danima unapred. Sve ide u pećnicu tog jutra.",
+      "Ništa se ne priprema danima unapred. Sveže se sprema na dan dostave.",
     icon: (
       <svg viewBox="0 0 32 32" fill="none" className="h-8 w-8" aria-hidden="true">
         <path
@@ -90,7 +90,7 @@ export default function WhyUsSection() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Zašto baš mi"
-          title="Kuvamo kao za svoju porodicu"
+          title="Pripremamo kao za svoju porodicu"
         />
 
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">

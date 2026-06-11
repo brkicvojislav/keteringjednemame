@@ -1,4 +1,4 @@
-export const INSTAGRAM_HANDLE = "domacefinopecivo" as const;
+export const INSTAGRAM_HANDLE = "ketering_jedne_mame" as const;
 
 export const CONTACT = {
   name: "Lidija",
@@ -9,7 +9,6 @@ export const CONTACT = {
   workingHours: "Pon–Ned: 08–20h",
   deliveryZone: "Dostava širom Beograda",
   instagram: `https://www.instagram.com/${INSTAGRAM_HANDLE}/`,
-  facebook: "https://facebook.com/keteringjednemame",
 } as const;
 
 export const INSTAGRAM_BIO = [

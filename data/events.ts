@@ -23,7 +23,7 @@ export const eventTypes: EventType[] = [
     id: "svadbe",
     name: "Svadbe i venčanja",
     description:
-      "Od dobrodošlice do kasne večeri, hladna i topla jela za svaki deo proslave.",
+      "Od dobrodošlice do kasne večeri, peciva i zalogaji za svaki deo proslave.",
     icon: "rings",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80&auto=format&fit=crop",
@@ -41,7 +41,7 @@ export const eventTypes: EventType[] = [
     id: "nova-godina",
     name: "Novogodišnje žurke",
     description:
-      "Slani i slatki zalogaji za doček, pečeno ujutro i dostavljeno sveže pred ponoć.",
+      "Slani i slatki zalogaji za doček, sveže pripremljeni i dostavljeni pred ponoć.",
     icon: "sparkle",
     image:
       "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80&auto=format&fit=crop",
