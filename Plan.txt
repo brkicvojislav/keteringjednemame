@@ -1,0 +1,312 @@
+🏠 BRAND IDENTITET — "Ketering Jedne Mame"
+Ton: Topao, direktan, poverljiv. Kao da ti komšinica kaže "Zovi me, sredim ja to." Nula korporativnog, nula food-blogger vibracije.
+Vizuelni identitet (ne-default estetika):
+
+Signature element: Naslovni font koji izgleda kao ručni rukopis u kombinaciji sa čistim modernim layoutom — kao da je mamina receptna knjiga srela web dizajn. Svaki section naslov ima tanku, nepravilnu donju liniju (SVG potez rukom) ispod.
+Paleta: Duboka wine/burgundy (#6b2737) kao primarna — topla, domaća, ne previše vesela. Krem od jaja (#fef3e2) kao pozadina. Tamno zelena (#2c4a35) kao akcenat. Nikakva narandžasta — previše fast food.
+Font: Caveat ili Pacifico za display naslove (ručni), Nunito za body — okrugao, topao, čitljiv.
+
+
+📁 PROJECT STRUKTURA (Next.js App Router)
+ketering-jedne-mame/
+├── app/
+│   ├── layout.tsx          # Root layout, font import, metadata
+│   ├── page.tsx            # Samo importuje sve sekcije
+│   └── globals.css
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx
+│   │   └── Footer.tsx
+│   ├── sections/
+│   │   ├── HeroSection.tsx
+│   │   ├── WhyUsSection.tsx
+│   │   ├── MenuSection.tsx
+│   │   ├── HowItWorksSection.tsx
+│   │   ├── EventTypesSection.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── TestimonialsSection.tsx
+│   │   └── ContactSection.tsx
+│   └── ui/
+│       ├── MenuCard.tsx
+│       ├── MenuFilter.tsx
+│       ├── TestimonialCard.tsx
+│       ├── EventCard.tsx
+│       ├── SectionHeading.tsx
+│       ├── ContactForm.tsx
+│       └── WaveDivider.tsx
+├── data/
+│   ├── menu.ts
+│   ├── testimonials.ts
+│   └── events.ts
+├── lib/
+│   └── types.ts
+├── public/
+│   └── images/
+├── next.config.ts
+├── tailwind.config.ts
+└── package.json
+
+🧩 KOMPLETAN PLAN SEKCIJA I KOMPONENTI
+
+app/layout.tsx
+Root layout koji se ne menja. Sadrži:
+
+Google Fonts import: Caveat (700) + Nunito (400, 600, 700)
+<html lang="sr">
+Globalni <Navbar /> iznad {children}
+Globalni <Footer /> ispod {children}
+Metadata: title, description, og:image za deljenje na Viber/WhatsApp
+
+
+app/page.tsx
+Čista stranica, samo sekvenca sekcija:
+tsx<HeroSection />
+<WhyUsSection />
+<MenuSection />
+<HowItWorksSection />
+<EventTypesSection />
+<GallerySection />
+<TestimonialsSection />
+<ContactSection />
+
+components/layout/Navbar.tsx
+Ponašanje:
+
+sticky top-0 z-50
+Defaultno: providna pozadina (bg-transparent)
+Nakon 80px scroll-a: bela pozadina + shadow — implementirano sa useEffect + window.scrollY
+Tranzicija: transition-all duration-300
+
+Sadržaj levo → centar → desno:
+
+Levo: Logo — SVG ikonica tanjira + "Ketering" u Caveat fontu bold + "jedne mame" u Nunito sitnijem ispod
+Centar: nav linkovi — Ponuda / Meni / Galerija / Događaji / Kontakt — smooth scroll anchori (href="#menu" itd.)
+Desno: dugme Naruči odmah — wine boja, zaobljeno, hover darkens
+
+Mobilni (< 768px):
+
+Hamburger dugme desno
+State: isOpen: boolean
+Drawer sa vrha ili overlay sa desne strane — linkovi vertikalno, veći font
+Backdrop koji zatvara drawer na klik izvan
+
+
+components/sections/HeroSection.tsx
+Layout: min-h-screen, relative, pozadinska slika kroz next/image sa fill i object-cover.
+Sadržaj (levo, vertikalno centriran, max-width ~55%):
+
+Sitni uppercase tag: KETERING · BEOGRAD I OKOLINA — Nunito, wine boja, letter-spacing wide
+H1 u Caveat fontu, veliku: "Pravo domaće, od prave mame." — belo, 3 reči + interpunkcija koja daje karakter
+Podnaslov: "Kifle, rolati, mini pice i još mnogo toga — svež, ručno pripremljen, dostavljen na vrata." — Nunito, belo 80% opacity
+Dva dugmeta: Pogledaj meni (wine fill) + Pošalji upit (white outline)
+Ispod dugmadi: sitni social proof badge — "⭐ 150+ zadovoljnih porodica"
+
+Overlay: SVG linearni gradient — levo tamno, desno providno.
+Dno hero-a: <WaveDivider /> komponenta — beli SVG talas koji prelazi u krem pozadinu sledeće sekcije.
+Next.js specifičnost: priority prop na <Image /> za LCP optimizaciju.
+
+components/sections/WhyUsSection.tsx
+Pozadina: krem (#fef3e2), puna širina.
+Vrh: <SectionHeading /> komponenta sa:
+
+Eyebrow tekst: "Zašto baš mi"
+H2: "Kuvamo kao za svoju porodicu"
+SVG ručna linija ispod H2 (signature element)
+
+Grid 4 feature bloka (grid-cols-2 md:grid-cols-4), svaki blok:
+
+SVG ikonica u wine boji (custom, ne emoji)
+H3 naslov
+Opis 2-3 rečenice
+Bez bordera, sa hover:shadow-md i transition
+
+Sadržaj blokova:
+
+🏠 Pravi domaći ukus — "Recepture iz porodičnih sveški, bez konzervansa i prečica."
+⏱️ Tačni kao švajcarski sat — "Dogovoreni termin je svetinja. Uvek na vreme, uvek kompletno."
+🎉 Za svaku prigodu — "Od kućnih proslava do korporativnih događaja za 200+ gostiju."
+🌿 Svež na dan dostave — "Ništa se ne pravi danima unapred. Sve ide u pećnicu tog jutra."
+
+
+components/sections/MenuSection.tsx
+Pozadina: bela, id="meni" za anchor navigaciju.
+Struktura:
+SectionHeading
+MenuFilter (client component)
+MenuGrid (renderuje filtrirane MenuCard-ove)
+Disclaimer text
+CTA dugme
+components/ui/MenuFilter.tsx — "use client", sadrži:
+
+State: activeCategory: string
+Dugmad za kategorije, onClick menja state
+Props: categories niz, onFilter callback
+
+Kategorije: Sve | Kifle i peciva | Rolati | Mini pice | Bavarske kifle | Takitosi | Slani kolači | Slatko
+components/ui/MenuCard.tsx — props:
+tsinterface MenuItem {
+  id: string
+  name: string
+  description: string
+  category: string
+  minQuantity: number
+  pricePerPiece: number
+  image: string
+}
+
+<Image /> sa aspect-ratio: 4/3
+Naziv, opis, min količina, cena
+Hover: hover:-translate-y-1 hover:shadow-lg transition-all
+
+data/menu.ts — array objekata sa svim stavkama menija.
+
+components/sections/HowItWorksSection.tsx
+Pozadina: blago topla krem (#fdf6ed).
+Layout: 3 koraka horizontalno, grid-cols-3, na mobilnom grid-cols-1.
+Između koraka na desktopu: SVG horizontalna tačkasta strelica (ne numerički marker kao kod svih — ovde je content zaista sekvencijalan pa markers imaju smisla).
+Sadržaj koraka:
+
+Korak 1 — "Piši ili zovi" — "Reci nam šta slaviš, koliko vas ima i šta bi volela da poručiš. Viber, telefon ili forma — svejedno."
+Korak 2 — "Dogovorimo sve" — "Šaljemo kalkulaciju, potvrđujemo termin i dogovaramo detalje. Bez komplikacija."
+Korak 3 — "Ti uživaš, mi donosimo" — "Svež, upakovan i spreman na tvoja vrata. Ostaje ti samo da poređaš na sto."
+
+CTA ispod: Pošalji upit → scroll ka #kontakt.
+
+components/sections/EventTypesSection.tsx
+Pozadina: tamno wine/burgundy (#6b2737) — kontrastna dark sekcija.
+<SectionHeading /> — beli tekst, eyebrow i H2.
+6 kartica u grid-cols-2 md:grid-cols-3, svaka EventCard:
+
+next/image kao pozadinska slika
+Dark overlay
+Ikonica + naziv tipa eventa
+Hover: overlay postaje prozirniji, pojavljuje se kratki opis
+
+Sadržaj kartica:
+
+🎂 Slavlja i rođendani
+🏢 Korporativni eventi
+💒 Svadbe i venčanja
+🎓 Maturski i diplomski
+🎄 Novogodišnje žurke
+🏡 Roštilj i kućne zabave
+
+
+components/sections/GallerySection.tsx
+Pozadina: bela, id="galerija".
+CSS masonry grid ili uniformni grid-cols-3 — 9 slika, sve next/image sa object-cover.
+Hover state na svakoj slici: tamni overlay sa opacity-0 hover:opacity-100 transition-opacity + + ikonica u centru.
+Lightbox: opcionalno — može biti jednostavan useState sa modalnim prozorom koji prikazuje uvećanu sliku + zatvaranje na Escape ili klik izvan.
+Ispod grida: Instagram link u wine boji.
+
+components/sections/TestimonialsSection.tsx
+Pozadina: krem, id="utisci".
+3 <TestimonialCard /> vidljive na desktopu. Na mobilnom: slider sa useState(currentIndex) + touch swipe eventi.
+components/ui/TestimonialCard.tsx props:
+tsinterface Testimonial {
+  name: string
+  event: string
+  quote: string
+  rating: number
+  avatar?: string
+}
+
+5 zvezdica zlatne boje
+Quote u Caveat fontu (ručni feel), italic
+Ime + tip eventa
+
+data/testimonials.ts — 5-6 izmišljenih ali ubedljivih testimonijala.
+
+components/sections/ContactSection.tsx
+Pozadina: bela ili tamna zelena (#2c4a35) — vizualni kontrast prema prethodnoj sekciji. id="kontakt".
+Layout: grid-cols-1 md:grid-cols-2.
+Levo — <ContactForm /> ("use client"):
+tsinterface FormData {
+  name: string
+  phone: string
+  email: string
+  date: string
+  guestCount: string
+  categories: string[]
+  note: string
+}
+
+useState za svako polje
+Validacija pre slanja (phone obavezan, name obavezan)
+Submit → Formspree endpoint ili EmailJS
+Loading state na dugmetu tokom slanja
+Success state: forma se zameni porukom "Hvala! Javljamo se uskoro. 🎉"
+
+Desno — Kontakt informacije:
+
+Telefon klikabilan tel:
+Viber badge (važno za srpsko tržište)
+Email mailto:
+Radno vreme
+Zona dostave
+Instagram + Facebook ikonice
+
+
+components/layout/Footer.tsx
+Pozadina: tamna (#1a1a1a), puna širina.
+3 kolone + copyright dno:
+
+Logo + tagline
+Brzi linkovi (anchor navigacija)
+Kontakt info
+
+Copyright: © 2025 Ketering Jedne Mame · Dizajn: [tvoje ime]
+
+components/ui/SectionHeading.tsx
+Reusable komponenta koja prima:
+tsinterface SectionHeadingProps {
+  eyebrow?: string      // mali uppercase tekst iznad
+  title: string         // H2
+  subtitle?: string     // podnaslov
+  centered?: boolean    // default true
+  light?: boolean       // bele boje za tamne sekcije
+}
+Svaki H2 ispod ima tanku SVG <path> liniju koja izgleda kao ručni potez — signature vizuelni element sajta.
+
+components/ui/WaveDivider.tsx
+SVG talas koji se koristi između sekcija. Props:
+tsinterface WaveDividerProps {
+  fillColor: string     // boja koja "popunjava" talas
+  flipY?: boolean       // za talas u suprotnom smeru
+}
+
+⚙️ TECH STACK I SETUP
+Next.js 15 (App Router)
+TypeScript
+Tailwind CSS v4
+next/image (Image optimization — automatski WebP, lazy loading)
+next/font (Google Fonts bez layout shift)
+Formspree (forma bez backend-a)
+Vercel (hosting, automatski deploy sa git push)
+next.config.ts — dodati images.domains za Unsplash placeholder slike dok se ne zamene pravim.
+tailwind.config.ts — proširiti theme.extend sa custom bojama i fontovima:
+tscolors: {
+  wine: '#6b2737',
+  cream: '#fef3e2',
+  forest: '#2c4a35',
+},
+fontFamily: {
+  display: ['Caveat', 'cursive'],
+  body: ['Nunito', 'sans-serif'],
+}
+
+🚀 REDOSLED IMPLEMENTACIJE
+Predlažem ovaj redosled da uvek imaš deployabilan sajt:
+
+next.config + tailwind.config + fontovi + globalni CSS
+Navbar + Footer + layout.tsx
+HeroSection — odmah izgleda sajt
+WhyUsSection + SectionHeading + WaveDivider
+data/menu.ts → MenuCard → MenuFilter → MenuSection
+HowItWorksSection
+EventTypesSection
+GallerySection
+TestimonialsSection
+ContactForm + ContactSection
+SEO metadata, og:image, favicon
+Deploy na Vercel + custom domen
