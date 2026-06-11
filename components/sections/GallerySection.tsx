@@ -144,7 +144,7 @@ export default function GallerySection() {
       </div>
 
       {/* Lightbox */}
-      {activeImage && (
+      {lightboxIndex !== null && activeImage && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/90 p-4"
           onClick={closeLightbox}
