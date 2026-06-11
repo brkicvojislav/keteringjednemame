@@ -3,16 +3,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import LightboxImage from "@/components/gallery/LightboxImage";
+import SectionHeading from "@/components/ui/SectionHeading";
 import {
   featuredGalleryImages,
   galleryImages,
   INSTAGRAM_URL,
 } from "@/data/gallery";
-import SectionHeading from "@/components/ui/SectionHeading";
+import {
+  prefetchGalleryBatch,
+  prefetchGalleryImage,
+  prefetchGalleryNeighbors,
+} from "@/lib/gallery-prefetch";
 
 export default function GallerySection() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefetchStarted = useRef(false);
 
   const closeLightbox = useCallback(() => {
     setLightboxIndex(null);
@@ -39,6 +47,13 @@ export default function GallerySection() {
     }
   };
 
+  const handleGridPointerDown = (imageId: string) => {
+    const image = galleryImages.find((item) => item.id === imageId);
+    if (image) {
+      prefetchGalleryImage(image.src);
+    }
+  };
+
   const handleTouchStart = (event: React.TouchEvent) => {
     touchStartX.current = event.touches[0]?.clientX ?? null;
   };
@@ -62,7 +77,32 @@ export default function GallerySection() {
   };
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || prefetchStarted.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting || prefetchStarted.current) return;
+
+        prefetchStarted.current = true;
+        const schedule =
+          typeof window.requestIdleCallback === "function"
+            ? window.requestIdleCallback
+            : (cb: IdleRequestCallback) => window.setTimeout(cb, 200);
+
+        schedule(() => prefetchGalleryBatch(galleryImages));
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (lightboxIndex === null) return;
+
+    prefetchGalleryNeighbors(lightboxIndex, galleryImages);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
@@ -83,7 +123,11 @@ export default function GallerySection() {
     lightboxIndex !== null ? galleryImages[lightboxIndex] : null;
 
   return (
-    <section id="galerija" className="bg-white px-4 py-20 md:px-6 md:py-28">
+    <section
+      ref={sectionRef}
+      id="galerija"
+      className="bg-white px-4 py-20 md:px-6 md:py-28"
+    >
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Naš rad"
@@ -98,40 +142,41 @@ export default function GallerySection() {
               featuredGalleryImages.length % 2 !== 0;
 
             return (
-            <button
-              key={image.id}
-              type="button"
-              className={`group relative aspect-square overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-wine focus-visible:ring-offset-2 ${
-                isLastAloneOnMobile ? "col-span-2 md:col-span-1" : ""
-              }`}
-              onClick={() => openLightbox(image.id)}
-              aria-label={`Uvećaj sliku: ${image.alt}`}
-            >
-              <Image
-                src={image.thumbSrc}
-                alt={image.alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes={
-                  isLastAloneOnMobile
-                    ? "(max-width: 768px) 100vw, 33vw"
-                    : "(max-width: 768px) 50vw, 33vw"
-                }
-              />
+              <button
+                key={image.id}
+                type="button"
+                className={`group relative aspect-square overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-wine focus-visible:ring-offset-2 ${
+                  isLastAloneOnMobile ? "col-span-2 md:col-span-1" : ""
+                }`}
+                onPointerDown={() => handleGridPointerDown(image.id)}
+                onClick={() => openLightbox(image.id)}
+                aria-label={`Uvećaj sliku: ${image.alt}`}
+              >
+                <Image
+                  src={image.thumbSrc}
+                  alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes={
+                    isLastAloneOnMobile
+                      ? "(max-width: 768px) 100vw, 33vw"
+                      : "(max-width: 768px) 50vw, 33vw"
+                  }
+                />
 
-              <div className="absolute inset-0 flex items-center justify-center bg-charcoal/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="h-8 w-8 text-white"
-                  aria-hidden="true"
-                >
-                  <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-                </svg>
-              </div>
-            </button>
+                <div className="absolute inset-0 flex items-center justify-center bg-charcoal/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="h-8 w-8 text-white"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+                  </svg>
+                </div>
+              </button>
             );
           })}
         </div>
@@ -158,7 +203,6 @@ export default function GallerySection() {
         </p>
       </div>
 
-      {/* Lightbox */}
       {lightboxIndex !== null && activeImage && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/90 p-4"
@@ -216,15 +260,7 @@ export default function GallerySection() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <Image
-              key={activeImage.id}
-              src={activeImage.src}
-              alt={activeImage.alt}
-              fill
-              className="pointer-events-none object-contain"
-              sizes="100vw"
-              priority
-            />
+            <LightboxImage key={activeImage.id} image={activeImage} />
           </div>
         </div>
       )}

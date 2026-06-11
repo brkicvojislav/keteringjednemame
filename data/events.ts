@@ -35,7 +35,7 @@ export const eventTypes: EventType[] = [
       "Velike količine, brza organizacija i meni koji će oduševiti celu generaciju.",
     icon: "graduation",
     image:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80&auto=format&fit=crop",
   },
   {
     id: "nova-godina",
@@ -44,7 +44,7 @@ export const eventTypes: EventType[] = [
       "Slani i slatki zalogaji za doček, pečeno ujutro i dostavljeno sveže pred ponoć.",
     icon: "sparkle",
     image:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80&auto=format&fit=crop",
   },
   {
     id: "rostilj",
