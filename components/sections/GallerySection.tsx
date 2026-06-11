@@ -58,11 +58,17 @@ export default function GallerySection() {
         />
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-          {galleryImages.map((image, index) => (
+          {galleryImages.map((image, index) => {
+            const isLastAloneOnMobile =
+              index === galleryImages.length - 1 && galleryImages.length % 2 !== 0;
+
+            return (
             <button
               key={image.id}
               type="button"
-              className="group relative aspect-square overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-wine focus-visible:ring-offset-2"
+              className={`group relative aspect-square overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-wine focus-visible:ring-offset-2 ${
+                isLastAloneOnMobile ? "col-span-2 md:col-span-1" : ""
+              }`}
               onClick={() => openLightbox(index)}
               aria-label={`Uvećaj sliku: ${image.alt}`}
             >
@@ -71,7 +77,11 @@ export default function GallerySection() {
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 33vw"
+                sizes={
+                  isLastAloneOnMobile
+                    ? "(max-width: 768px) 100vw, 33vw"
+                    : "(max-width: 768px) 50vw, 33vw"
+                }
               />
 
               <div className="absolute inset-0 flex items-center justify-center bg-charcoal/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -87,7 +97,8 @@ export default function GallerySection() {
                 </svg>
               </div>
             </button>
-          ))}
+            );
+          })}
         </div>
 
         <p className="mt-10 text-center">
