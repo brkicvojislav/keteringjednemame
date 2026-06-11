@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import KiflaIcon from "@/components/ui/KiflaIcon";
 
 const navLinks = [
   { label: "Ponuda", href: "#ponuda" },
@@ -10,27 +11,6 @@ const navLinks = [
   { label: "Događaji", href: "#dogadjaji" },
   { label: "Kontakt", href: "#kontakt" },
 ];
-
-function PlateIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="8" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <path
-        d="M10 14c1.5-2 3.5-3 6-3s4.5 1 6 3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 function Logo({
   light,
@@ -51,7 +31,7 @@ function Logo({
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
     >
-      <PlateIcon className="h-9 w-9 shrink-0" />
+      <KiflaIcon className="h-9 w-9 shrink-0" />
       <div className="leading-tight">
         <span className="font-display text-2xl font-bold tracking-tight">
           Ketering

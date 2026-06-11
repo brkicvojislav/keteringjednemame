@@ -1,4 +1,5 @@
 import Link from "next/link";
+import KiflaIcon from "@/components/ui/KiflaIcon";
 import { CONTACT } from "@/lib/contact";
 
 const quickLinks = [
@@ -9,27 +10,6 @@ const quickLinks = [
   { label: "Kontakt", href: "#kontakt" },
 ];
 
-function PlateIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="8" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <path
-        d="M10 14c1.5-2 3.5-3 6-3s4.5 1 6 3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export default function Footer() {
   return (
     <footer className="bg-charcoal text-white/80">
@@ -38,7 +18,7 @@ export default function Footer() {
           {/* Logo + tagline */}
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center justify-center gap-2.5 text-white md:justify-start">
-              <PlateIcon className="h-8 w-8 shrink-0 text-wine" />
+              <KiflaIcon className="h-8 w-8 shrink-0 text-wine" />
               <div className="leading-tight">
                 <span className="font-display text-xl font-bold">Ketering</span>
                 <span className="block text-xs font-semibold tracking-wide text-white/60">
