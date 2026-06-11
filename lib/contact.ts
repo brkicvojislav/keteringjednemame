@@ -6,7 +6,7 @@ export const CONTACT = {
   phoneHref: "+381694441995",
   viberHref: "viber://chat?number=381694441995",
   email: "info@keteringjednemame.rs",
-  workingHours: "Pon–Sub: 08–20h",
+  workingHours: "Pon–Ned: 08–20h",
   deliveryZone: "Dostava širom Beograda",
   instagram: `https://www.instagram.com/${INSTAGRAM_HANDLE}/`,
   facebook: "https://facebook.com/keteringjednemame",

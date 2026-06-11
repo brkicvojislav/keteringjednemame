@@ -5,7 +5,7 @@ export const testimonials: Testimonial[] = [
     name: "Jelena M.",
     event: "Rođendan, 40 gostiju",
     quote:
-      "Poručila sam kiflice i rolati za sinovog rođendana — stiglo tačno u 11, sve toplo i sveže. Gosti su tražili kontakt još istog dana!",
+      "Poručila sam kiflice i rolati za sinovog rođendana. Stiglo tačno u 11, sve toplo i sveže. Gosti su tražili kontakt još istog dana!",
     rating: 5,
   },
   {
@@ -19,7 +19,7 @@ export const testimonials: Testimonial[] = [
     name: "Ana i Stefan",
     event: "Svadbeni koktel",
     quote:
-      "Za dobrodošlicu gostima smo želeli domaće, a ne klasičan ketering. Bavarske kifle i slani rolati — savršena kombinacija.",
+      "Za dobrodošlicu gostima smo želeli domaće, a ne klasičan ketering. Bavarske kifle i slani rolati bili su savršena kombinacija.",
     rating: 5,
   },
   {
@@ -33,14 +33,14 @@ export const testimonials: Testimonial[] = [
     name: "Dragan V.",
     event: "Novogodišnja proslava",
     quote:
-      "Doček Nove godine sa porodicom — nismo morali ništa da kuvamo. Sveže, obilno i kao od kuće. Već planiramo za sledeću godinu.",
+      "Doček Nove godine sa porodicom prošao je bez kuvanja. Sveže, obilno i kao od kuće. Već planiramo za sledeću godinu.",
     rating: 5,
   },
   {
     name: "Ivana S.",
     event: "Kućna zabava",
     quote:
-      "Roštilj smo mi, a ona je donela peciva i pite. Kao da je baka došla u goste — topao, domaći osećaj koji se ne može kupiti.",
+      "Roštilj smo mi, a ona je donela peciva i pite. Kao da je baka došla u goste, topao, domaći osećaj koji se ne može kupiti.",
     rating: 5,
   },
 ];

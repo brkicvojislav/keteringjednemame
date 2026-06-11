@@ -1,23 +1,9 @@
 import Image from "next/image";
+import { formatMenuMinLabel, formatMenuPrice } from "@/lib/menu-format";
 import type { MenuItem } from "@/lib/types";
 
 interface MenuCardProps {
   item: MenuItem;
-}
-
-function formatPrice(item: MenuItem): string {
-  const isWholeCake = item.minQuantity === 1 && item.pricePerPiece >= 1000;
-  if (isWholeCake) {
-    return `od ${item.pricePerPiece.toLocaleString("sr-RS")} RSD / kom`;
-  }
-  return `${item.pricePerPiece.toLocaleString("sr-RS")} RSD / kom`;
-}
-
-function formatMinQuantity(item: MenuItem): string {
-  if (item.minQuantity === 1) {
-    return "Min. 1 komad";
-  }
-  return `Min. ${item.minQuantity} kom`;
 }
 
 export default function MenuCard({ item }: MenuCardProps) {
@@ -41,9 +27,9 @@ export default function MenuCard({ item }: MenuCardProps) {
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-charcoal/10 pt-4">
           <span className="text-xs font-semibold text-charcoal/50">
-            {formatMinQuantity(item)}
+            {formatMenuMinLabel(item)}
           </span>
-          <span className="text-sm font-bold text-wine">{formatPrice(item)}</span>
+          <span className="text-sm font-bold text-wine">{formatMenuPrice(item)}</span>
         </div>
       </div>
     </article>

@@ -5,7 +5,7 @@ export const eventTypes: EventType[] = [
     id: "rodjendani",
     name: "Slavlja i rođendani",
     description:
-      "Kiflice, rolati i slatko — sve što treba za nezaboravan rođendan, bez stresa u kuhinji.",
+      "Kiflice, rolati i slatko za nezaboravan rođendan, bez stresa u kuhinji.",
     icon: "cake",
     image:
       "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80&auto=format&fit=crop",
@@ -23,7 +23,7 @@ export const eventTypes: EventType[] = [
     id: "svadbe",
     name: "Svadbe i venčanja",
     description:
-      "Od dobrodošlice do kasne večeri — hladna i topla jela za svaki deo proslave.",
+      "Od dobrodošlice do kasne večeri, hladna i topla jela za svaki deo proslave.",
     icon: "rings",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80&auto=format&fit=crop",
@@ -41,7 +41,7 @@ export const eventTypes: EventType[] = [
     id: "nova-godina",
     name: "Novogodišnje žurke",
     description:
-      "Slani i slatki zalogaji za doček — pečeno ujutro, dostavljeno sveže pred ponoć.",
+      "Slani i slatki zalogaji za doček, pečeno ujutro i dostavljeno sveže pred ponoć.",
     icon: "sparkle",
     image:
       "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80&auto=format&fit=crop",
@@ -50,7 +50,7 @@ export const eventTypes: EventType[] = [
     id: "rostilj",
     name: "Roštilj i kućne zabave",
     description:
-      "Bavarske kifle, peciva i prilozi — ti pališ roštilj, mi donosimo ostatak.",
+      "Bavarske kifle, peciva i prilozi. Ti pališ roštilj, mi donosimo ostatak.",
     icon: "home",
     image:
       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80&auto=format&fit=crop",

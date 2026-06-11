@@ -86,7 +86,7 @@ const features = [
 
 export default function WhyUsSection() {
   return (
-    <section id="ponuda" className="bg-cream px-4 py-20 md:px-6 md:py-28">
+    <section id="zasto-mi" className="bg-cream px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Zašto baš mi"

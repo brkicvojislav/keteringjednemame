@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { ORDER_INQUIRY_EVENT } from "@/lib/order-inquiry";
+import { MENU_FORM_CATEGORY_ROWS } from "@/data/menu";
 import type { FormData } from "@/lib/types";
-const FORM_CATEGORY_ROWS = [
-  ["Kifle i peciva", "Rolati", "Mini pice", "Bavarske kifle"],
-  ["Takitosi", "Slani kolači", "Slatko"],
-] as const satisfies readonly (readonly string[])[];
 
 const initialFormData: FormData = {
   name: "",
@@ -23,6 +21,19 @@ export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    const handleOrderInquiry = (event: Event) => {
+      const note = (event as CustomEvent<{ note: string }>).detail?.note;
+      if (note) {
+        setFormData((prev) => ({ ...prev, note }));
+        setIsSuccess(false);
+      }
+    };
+
+    window.addEventListener(ORDER_INQUIRY_EVENT, handleOrderInquiry);
+    return () => window.removeEventListener(ORDER_INQUIRY_EVENT, handleOrderInquiry);
+  }, []);
 
   const updateField = <K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -66,22 +77,13 @@ export default function ContactForm() {
 
     if (!validate()) return;
 
-    const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-    if (!formId) {
-      setSubmitError(
-        "Formular nije podešen. Dodajte NEXT_PUBLIC_FORMSPREE_ID u .env.local fajl."
-      );
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      const response = await fetch(`https://formspree.io/f/${formId}`, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
@@ -94,8 +96,16 @@ export default function ContactForm() {
         }),
       });
 
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+
       if (!response.ok) {
-        throw new Error("Greška pri slanju");
+        setSubmitError(
+          result?.error ??
+            "Došlo je do greške. Pokušajte ponovo ili nas pozovite direktno."
+        );
+        return;
       }
 
       setIsSuccess(true);
@@ -114,7 +124,7 @@ export default function ContactForm() {
           Hvala! Javljamo se uskoro. 🎉
         </p>
         <p className="mt-4 text-white/70">
-          Proverite telefon — obično odgovaramo u roku od 24 sata.
+          Proverite telefon. Obično odgovaramo u roku od 24 sata.
         </p>
         <button
           type="button"
@@ -220,7 +230,7 @@ export default function ContactForm() {
         </legend>
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {FORM_CATEGORY_ROWS[0].map((category) => {
+            {MENU_FORM_CATEGORY_ROWS[0].map((category) => {
               const isChecked = formData.categories.includes(category);
               return (
                 <label
@@ -242,8 +252,31 @@ export default function ContactForm() {
               );
             })}
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {FORM_CATEGORY_ROWS[1].map((category) => {
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {MENU_FORM_CATEGORY_ROWS[1].map((category) => {
+              const isChecked = formData.categories.includes(category);
+              return (
+                <label
+                  key={category}
+                  className={`flex cursor-pointer items-center justify-center rounded-full px-2.5 py-1.5 text-center text-xs font-semibold leading-tight transition-colors sm:px-3 ${
+                    isChecked
+                      ? "bg-gold text-charcoal"
+                      : "bg-white/10 text-white/80 hover:bg-white/20"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    className="sr-only"
+                    checked={isChecked}
+                    onChange={() => toggleCategory(category)}
+                  />
+                  {category}
+                </label>
+              );
+            })}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {MENU_FORM_CATEGORY_ROWS[2].map((category) => {
               const isChecked = formData.categories.includes(category);
               return (
                 <label

@@ -1,10 +1,14 @@
+export type PriceUnit = "kg" | "kom";
+
 export interface MenuItem {
   id: string;
   name: string;
   description: string;
   category: string;
+  /** Minimum in kg (e.g. 0.5 = 500 g) or number of packs when priceUnit is "kom". */
   minQuantity: number;
-  pricePerPiece: number;
+  price: number;
+  priceUnit: PriceUnit;
   image: string;
 }
 

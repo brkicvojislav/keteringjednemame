@@ -1,14 +1,7 @@
 import Link from "next/link";
 import KiflaIcon from "@/components/ui/KiflaIcon";
 import { CONTACT } from "@/lib/contact";
-
-const quickLinks = [
-  { label: "Ponuda", href: "#ponuda" },
-  { label: "Meni", href: "#meni" },
-  { label: "Galerija", href: "#galerija" },
-  { label: "Događaji", href: "#dogadjaji" },
-  { label: "Kontakt", href: "#kontakt" },
-];
+import { SITE_FOOTER_LINKS } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -27,7 +20,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-white/60 md:mx-0">
-              Pravo domaće, ručno pripremljeno — za svaku proslavu u Beogradu i
+              Pravo domaće, ručno pripremljeno za svaku proslavu u Beogradu i
               okolini.
             </p>
           </div>
@@ -38,7 +31,7 @@ export default function Footer() {
               Brzi linkovi
             </h3>
             <ul className="flex flex-col items-center gap-2.5 md:items-start">
-              {quickLinks.map((link) => (
+              {SITE_FOOTER_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -63,14 +56,6 @@ export default function Footer() {
                   className="transition-colors hover:text-white"
                 >
                   {CONTACT.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="transition-colors hover:text-white"
-                >
-                  {CONTACT.email}
                 </a>
               </li>
               <li className="text-white/60">{CONTACT.workingHours}</li>

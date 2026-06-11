@@ -3,14 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import KiflaIcon from "@/components/ui/KiflaIcon";
-
-const navLinks = [
-  { label: "Ponuda", href: "#ponuda" },
-  { label: "Meni", href: "#meni" },
-  { label: "Galerija", href: "#galerija" },
-  { label: "Događaji", href: "#dogadjaji" },
-  { label: "Kontakt", href: "#kontakt" },
-];
+import { SITE_NAV_LINKS } from "@/lib/site";
 
 function Logo({ onNavigate }: { onNavigate?: () => void }) {
   return (
@@ -59,7 +52,7 @@ export default function Navbar() {
           <Logo />
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Glavna navigacija">
-            {navLinks.map((link) => (
+            {SITE_NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -142,7 +135,7 @@ export default function Navbar() {
         </div>
 
         <nav className="flex flex-1 flex-col gap-1 px-5 py-6" aria-label="Mobilna navigacija">
-          {navLinks.map((link) => (
+          {SITE_NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}

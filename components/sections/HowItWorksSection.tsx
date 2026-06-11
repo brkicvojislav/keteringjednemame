@@ -6,7 +6,7 @@ const steps = [
     number: "01",
     title: "Piši ili zovi",
     description:
-      "Reci nam šta slaviš, koliko vas ima i šta želiš da poručiš. Viber, telefon ili formular — svejedno.",
+      "Reci nam šta slaviš, koliko vas ima i šta želiš da poručiš. Viber, telefon ili formular, svejedno je.",
   },
   {
     number: "02",
@@ -22,12 +22,34 @@ const steps = [
   },
 ];
 
+function StepCard({
+  number,
+  title,
+  description,
+}: {
+  number: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex h-full min-h-[220px] flex-col rounded-2xl bg-white/70 p-6 text-center shadow-sm md:min-h-[240px] md:p-8">
+      <span className="font-display text-3xl text-wine/30">{number}</span>
+      <h3 className="mt-2 flex min-h-[3.25rem] items-center justify-center text-lg font-bold leading-snug text-charcoal md:text-xl">
+        {title}
+      </h3>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-charcoal/70">
+        {description}
+      </p>
+    </div>
+  );
+}
+
 function DottedArrow() {
   return (
     <svg
       viewBox="0 0 80 16"
       fill="none"
-      className="hidden h-4 w-16 shrink-0 text-wine/40 lg:block"
+      className="h-4 w-12 shrink-0 text-wine/40 md:w-16"
       aria-hidden="true"
     >
       <line
@@ -50,32 +72,40 @@ function DottedArrow() {
 
 export default function HowItWorksSection() {
   return (
-    <section className="bg-[#fdf6ed] px-4 py-20 md:px-6 md:py-28">
+    <section id="kako" className="bg-[#fdf6ed] px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Kako funkcioniše"
           title="Tri koraka do savršene proslave"
-          subtitle="Od prvog kontakta do stola punog hrane — jednostavno i bez stresa."
+          subtitle="Od prvog kontakta do stola punog hrane, jednostavno i bez stresa."
         />
 
-        <div className="flex flex-col items-stretch gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-          {steps.map((step, index) => (
-            <div key={step.number} className="flex flex-1 items-center gap-4">
-              <div className="flex-1 rounded-2xl bg-white/70 p-6 text-center shadow-sm md:p-8">
-                <span className="font-display text-3xl text-wine/30">
-                  {step.number}
-                </span>
-                <h3 className="mt-2 text-xl font-bold text-charcoal">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-charcoal/70">
-                  {step.description}
-                </p>
-              </div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-stretch lg:gap-4">
+          {steps.flatMap((step, index) => {
+            const card = (
+              <StepCard
+                key={step.number}
+                number={step.number}
+                title={step.title}
+                description={step.description}
+              />
+            );
 
-              {index < steps.length - 1 && <DottedArrow />}
-            </div>
-          ))}
+            if (index < steps.length - 1) {
+              return [
+                card,
+                <div
+                  key={`arrow-${step.number}`}
+                  className="hidden items-center justify-center lg:flex"
+                  aria-hidden="true"
+                >
+                  <DottedArrow />
+                </div>,
+              ];
+            }
+
+            return [card];
+          })}
         </div>
 
         <div className="mt-12 flex justify-center">

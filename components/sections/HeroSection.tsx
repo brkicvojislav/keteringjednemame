@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import WaveDivider from "@/components/ui/WaveDivider";
+import { OFFER_SECTION_LINK } from "@/lib/site";
 
 const HERO_IMAGE = "/images/hero.webp";
 
@@ -39,16 +40,16 @@ export default function HeroSection() {
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">
-            Kifle, rolati, mini pice i još mnogo toga — sveže, ručno pripremljeno,
-            dostavljeno na vrata.
+            Kifle, rolati, mini pice i još mnogo toga. Sveže, ručno pripremljeno
+            i dostavljeno na vrata.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
-              href="#meni"
+              href={OFFER_SECTION_LINK.href}
               className="inline-flex items-center justify-center rounded-full bg-wine px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-wine/90"
             >
-              Pogledaj meni
+              Pogledaj {OFFER_SECTION_LINK.label.toLowerCase()}
             </Link>
             <Link
               href="#kontakt"

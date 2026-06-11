@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Ketering Jedne Mame — Pravo domaće, od prave mame";
+export const alt = "Ketering Jedne Mame | Pravo domaće, od prave mame";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default function Image() {
             maxWidth: 700,
           }}
         >
-          Kifle, rolati, mini pice — sveže, ručno pripremljeno, dostavljeno na vrata.
+          Kifle, rolati, mini pice. Sveže, ručno pripremljeno, dostavljeno na vrata.
         </div>
       </div>
     ),

@@ -23,7 +23,7 @@ export default function MenuSection() {
         <SectionHeading
           eyebrow="Naša ponuda"
           title="Meni"
-          subtitle="Sveže, ručno pripremljeno — biraj po kategoriji ili pogledaj celu ponudu."
+          subtitle="Sveže, ručno pripremljeno. Biraj po kategoriji ili pogledaj celu ponudu."
         />
 
         <MenuFilter
@@ -44,10 +44,19 @@ export default function MenuSection() {
           </p>
         )}
 
-        <p className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-charcoal/55">
-          Cene su orijentacione i zavise od količine i datuma događaja. Za
-          tačnu kalkulaciju pošaljite upit — odgovaramo u roku od 24 sata.
-        </p>
+        <div className="mx-auto mt-12 max-w-2xl space-y-3 text-center text-sm leading-relaxed text-charcoal/55">
+          <p>
+            Minimalna porudžbina je <strong className="font-semibold text-charcoal/70">500 g po proizvodu</strong>
+            {" "}(kroasani min. 1 kg). Svi proizvodi mogu biti <strong className="font-semibold text-charcoal/70">HALAL</strong>.
+          </p>
+          <p>
+            Ketering dobijate u kutijama. Aranžiranje peciva na daske je moguće na
+            zahtev (daske se vraćaju u roku od 3 dana).
+          </p>
+          <p>
+            Za tačnu kalkulaciju pošaljite upit. Odgovaramo u roku od 24 sata.
+          </p>
+        </div>
 
         <div className="mt-8 flex justify-center">
           <Link

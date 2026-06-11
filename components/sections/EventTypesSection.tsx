@@ -9,7 +9,7 @@ export default function EventTypesSection() {
         <SectionHeading
           eyebrow="Za svaku priliku"
           title="Događaji koje pokrivamo"
-          subtitle="Bilo da slavite rođendan, organizujete poslovni sastanak ili dočekujete Novu godinu — imamo rešenje."
+          subtitle="Bilo da slavite rođendan, organizujete poslovni sastanak ili dočekujete Novu godinu, imamo rešenje."
           light
         />
 

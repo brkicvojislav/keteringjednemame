@@ -18,8 +18,12 @@ Kopiraj `.env.local.example` u `.env.local` i popuni:
 
 | Varijabla | Opis |
 |-----------|------|
-| `NEXT_PUBLIC_FORMSPREE_ID` | ID forme sa [Formspree](https://formspree.io) — za kontakt formu |
+| `RESEND_API_KEY` | API ključ sa [Resend](https://resend.com/api-keys) |
+| `RESEND_FROM_EMAIL` | Pošiljalac, npr. `Ketering <noreply@tvoj-domen.rs>` (domen mora biti verifikovan u Resend-u) |
+| `CONTACT_INQUIRY_TO_EMAIL` | Mejl na koji stižu upiti (opciono; podrazumevano iz `lib/contact.ts`) |
 | `NEXT_PUBLIC_SITE_URL` | Produkcijski URL (npr. `https://tvoj-domen.rs`) — za SEO i OG slike |
+
+Za lokalni test bez domena koristi `RESEND_FROM_EMAIL=Ketering <onboarding@resend.dev>` — Resend tada šalje samo na mejl povezan sa tvojim nalogom.
 
 ## Struktura projekta
 
@@ -54,7 +58,9 @@ npm run lint
 1. Push projekat na GitHub
 2. Importuj repo na [vercel.com](https://vercel.com)
 3. U Vercel → Settings → Environment Variables dodaj:
-   - `NEXT_PUBLIC_FORMSPREE_ID`
+   - `RESEND_API_KEY`
+   - `RESEND_FROM_EMAIL`
+   - `CONTACT_INQUIRY_TO_EMAIL` (opciono)
    - `NEXT_PUBLIC_SITE_URL` (npr. `https://ketering-jedne-mame.vercel.app`)
 4. Deploy — svaki push na `main` automatski deployuje
 
@@ -76,5 +82,5 @@ Trenutno se koriste Unsplash slike. Za produkciju:
 - React 19
 - TypeScript
 - Tailwind CSS v4
-- Formspree (kontakt forma)
+- Resend (kontakt forma → email)
 - Vercel (hosting)

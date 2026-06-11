@@ -25,7 +25,7 @@ export default function ContactSection() {
         <SectionHeading
           eyebrow="Kontakt"
           title="Pošaljite upit"
-          subtitle="Javite nam šta slavite — odgovaramo brzo, bez formalnosti."
+          subtitle="Javite nam šta slavite. Odgovaramo brzo, bez formalnosti."
           light
         />
 
@@ -34,7 +34,7 @@ export default function ContactSection() {
 
           <div className="text-center text-white/85 md:text-left">
             <h3 className="mb-6 text-lg font-bold text-white">
-              Ili nas kontaktirajte direktno — {CONTACT.name}
+              Ili nas kontaktirajte direktno: {CONTACT.name}
             </h3>
 
             <ul className="flex flex-col items-center gap-5 text-sm leading-relaxed md:items-start">
@@ -65,21 +65,6 @@ export default function ContactSection() {
                   className="inline-flex items-center gap-2 rounded-full bg-[#7360f2] px-4 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   Pošalji Viber poruku
-                </a>
-              </ContactItem>
-
-              <ContactItem
-                icon={
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5" aria-hidden="true">
-                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                }
-              >
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="transition-colors hover:text-gold"
-                >
-                  {CONTACT.email}
                 </a>
               </ContactItem>
 
