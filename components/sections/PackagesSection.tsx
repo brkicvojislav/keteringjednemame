@@ -1,5 +1,4 @@
 import SectionHeading from "@/components/ui/SectionHeading";
-import PackageInquiryButton from "@/components/ui/PackageInquiryButton";
 import { cateringPackages, packageProducts } from "@/data/packages";
 
 export default function PackagesSection() {
@@ -15,10 +14,7 @@ export default function PackagesSection() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
           {cateringPackages.map((pkg) => {
             const name = `Paket ${pkg.id}`;
-            const note = [
-              `Zainteresovan/a sam za ${name.toLowerCase()} (${pkg.guests} odraslih), cena ${pkg.price} din.`,
-              ...packageProducts.map((product, index) => `${product}: ${pkg.quantities[index]}`),
-            ].join("\n");
+
 
             return (
               <article
@@ -37,7 +33,7 @@ export default function PackagesSection() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
-                  <dl className="mb-6 space-y-3 text-sm leading-snug">
+                  <dl className="space-y-3 text-sm leading-snug">
                     {packageProducts.map((product, index) => (
                       <div key={product} className="flex items-baseline gap-1.5">
                         <dt className="min-w-0 text-charcoal/80">{product}</dt>
@@ -46,9 +42,6 @@ export default function PackagesSection() {
                       </div>
                     ))}
                   </dl>
-                  <div className="mt-auto">
-                    <PackageInquiryButton note={note} packageName={name} />
-                  </div>
                 </div>
               </article>
             );
