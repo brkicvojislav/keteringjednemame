@@ -5,6 +5,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import HowItWorksSection from "@/components/sections/HowItWorksSection";
 import MenuSection from "@/components/sections/MenuSection";
 import OrderCalculatorSection from "@/components/sections/OrderCalculatorSection";
+import PackagesSection from "@/components/sections/PackagesSection";
 import PriceListSection from "@/components/sections/PriceListSection";
 import { SHOW_MENU_SECTION } from "@/lib/site";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -17,6 +18,7 @@ export default function Home() {
       <WhyUsSection />
       {SHOW_MENU_SECTION && <MenuSection />}
       <EventTypesSection />
+      <PackagesSection />
       <PriceListSection />
       <OrderCalculatorSection />
       <GallerySection />
